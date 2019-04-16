@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Apr 5, 2019 12:53:10 PM by Hibernate Tools 5.1.10.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="prova" dynamic-insert="false" dynamic-update="false" mutable="true" name="it.ats.hibernate.Utenti" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="utenti">
+        <id name="ndg" type="int">
+            <column name="NDG"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="nome" optimistic-lock="true" type="string" unique="false">
+            <column length="40" name="nome"/>
+        </property>
+        <property generated="never" lazy="false" name="cognome" optimistic-lock="true" type="string" unique="false">
+            <column length="40" name="cognome"/>
+        </property>
+        <property generated="never" lazy="false" name="dataNascita" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="dataNascita"/>
+        </property>
+        <property generated="never" lazy="false" name="codFiscale" optimistic-lock="true" type="string" unique="false">
+            <column length="16" name="codFiscale"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="utentiAssociazioneContos" optimistic-lock="true" sort="unsorted" table="utenti_associazione_conto">
+            <key on-delete="noaction">
+                <column name="NDG" not-null="true"/>
+            </key>
+            <one-to-many class="it.ats.hibernate.UtentiAssociazioneConto" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
