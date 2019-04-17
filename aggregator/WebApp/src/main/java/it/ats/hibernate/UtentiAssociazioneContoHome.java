@@ -8,18 +8,25 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
-
 /**
  * Home object for domain model class UtentiAssociazioneConto.
  * @see it.ats.hibernate.UtentiAssociazioneConto
  * @author Hibernate Tools
  */
+
+/**
+ * @author laura.santomarco
+ */
+
 public class UtentiAssociazioneContoHome {
 
 	private static final Log log = LogFactory.getLog(UtentiAssociazioneContoHome.class);
-
 	private final SessionFactory sessionFactory = getSessionFactory();
-
+	/**
+	 * La SessionFactory è l’oggetto responsabile dell’apertura delle 
+	 * sessioni verso il database
+	 * @return 
+	 */
 	protected SessionFactory getSessionFactory() {
 		try {
 			return (SessionFactory) new InitialContext().lookup("SessionFactory");
@@ -28,7 +35,6 @@ public class UtentiAssociazioneContoHome {
 			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
 		}
 	}
-
 	public void persist(UtentiAssociazioneConto transientInstance) {
 		log.debug("persisting UtentiAssociazioneConto instance");
 		try {
@@ -39,7 +45,6 @@ public class UtentiAssociazioneContoHome {
 			throw re;
 		}
 	}
-
 	public void attachDirty(UtentiAssociazioneConto instance) {
 		log.debug("attaching dirty UtentiAssociazioneConto instance");
 		try {
@@ -50,7 +55,6 @@ public class UtentiAssociazioneContoHome {
 			throw re;
 		}
 	}
-
 	public void attachClean(UtentiAssociazioneConto instance) {
 		log.debug("attaching clean UtentiAssociazioneConto instance");
 		try {
@@ -61,7 +65,6 @@ public class UtentiAssociazioneContoHome {
 			throw re;
 		}
 	}
-
 	public void delete(UtentiAssociazioneConto persistentInstance) {
 		log.debug("deleting UtentiAssociazioneConto instance");
 		try {
@@ -72,7 +75,6 @@ public class UtentiAssociazioneContoHome {
 			throw re;
 		}
 	}
-
 	public UtentiAssociazioneConto merge(UtentiAssociazioneConto detachedInstance) {
 		log.debug("merging UtentiAssociazioneConto instance");
 		try {
@@ -85,7 +87,6 @@ public class UtentiAssociazioneContoHome {
 			throw re;
 		}
 	}
-
 	public UtentiAssociazioneConto findById(it.ats.hibernate.UtentiAssociazioneContoId id) {
 		log.debug("getting UtentiAssociazioneConto instance with id: " + id);
 		try {
@@ -102,7 +103,6 @@ public class UtentiAssociazioneContoHome {
 			throw re;
 		}
 	}
-
 	public List findByExample(UtentiAssociazioneConto instance) {
 		log.debug("finding UtentiAssociazioneConto instance by example");
 		try {

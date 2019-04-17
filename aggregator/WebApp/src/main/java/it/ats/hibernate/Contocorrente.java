@@ -24,6 +24,15 @@ public class Contocorrente implements java.io.Serializable {
 		this.idConto = idConto;
 	}
 
+	/**
+	 * Constructor
+	 * @param idConto
+	 * @param numero
+	 * @param dataApertura
+	 * @param dataChiusura
+	 * @param saldo
+	 * @param utentiAssociazioneContos
+	 */
 	public Contocorrente(int idConto, Integer numero, Date dataApertura, Date dataChiusura, Double saldo,
 			Set utentiAssociazioneContos) {
 		this.idConto = idConto;
@@ -34,6 +43,12 @@ public class Contocorrente implements java.io.Serializable {
 		this.utentiAssociazioneContos = utentiAssociazioneContos;
 	}
 
+	/**
+	 * Per accedere alle variabili dichiarate private sono stati definiti 
+	 * i metodi getter e setter 
+	 * @return idConto, numero, dataApertura, dataChiusura, saldo e 
+	 * utentiAssociazioneConto
+	 */
 	public int getIdConto() {
 		return this.idConto;
 	}

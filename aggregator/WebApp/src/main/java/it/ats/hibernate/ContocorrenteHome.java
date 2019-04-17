@@ -50,7 +50,6 @@ public class ContocorrenteHome {
 			throw re;
 		}
 	}
-
 	public void attachClean(Contocorrente instance) {
 		log.debug("attaching clean Contocorrente instance");
 		try {

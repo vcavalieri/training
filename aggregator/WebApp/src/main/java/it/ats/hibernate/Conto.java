@@ -2,26 +2,17 @@ package it.ats.hibernate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 /**
  * Servlet implementation class Conto
  */
-
 public class Conto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     /**
@@ -42,14 +33,24 @@ public class Conto extends HttpServlet {
         }
 	}         
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Il metodo insert è stato definito
+	 * per la registrazione di un nuovo conto corrente nel database 
+	 * Viene definita la SessionFactory ovvero l'oggetto 
+	 * responsabile dell’apertura delle sessioni  verso il database 
+	 * @param request contiene il valore di una richiesta parametrica come
+	 * una stringa, in questo caso idConto, numero, dataApertura, dataChiusura e saldo
+	 * @param response - in questo caso ritornerà un oggetto di tipo 
+	 * PrintWriter che mostrerà in output il messaggio che conferma l'avvenuto
+	 * inserimento
+	 * @throws ServletException 
+	 * @throws IOException
+	 * @exception ritorna un messaggio di errore se errata la queryString 
 	 */
 	protected void insert(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		try {
 	SessionFactory sessionFactory = (SessionFactory)getServletContext().getAttribute("SessionFactory");
 	Session session = sessionFactory.openSession();
-	// Begin Transaction avvia una transazione di database	
 	String idConto = request.getParameter("idConto");
 	String numero = request.getParameter("numero");
 	String dataApertura = request.getParameter("dataApertura");
@@ -83,7 +84,20 @@ public class Conto extends HttpServlet {
 	          "</html>");
 		}
 	}
-	
+	/**
+	 * Il metodo delete è stato definito per effettuare 
+	 * un'operazione di cancellazione su database attraverso una queryString
+	 * Viene definita la SessionFactory ovvero l'oggetto 
+	 * responsabile dell’apertura delle sessioni  verso il database 
+	 * @param request contiene il valore di una richiesta parametrica come
+	 * una stringa, in questo caso idConto
+	 * @param response - in questo caso ritornerà un oggetto di tipo 
+	 * PrintWriter che mostrerà in output il messaggio che conferma l'avvenuta
+	 * cancellazione
+	 * @throws ServletException 
+	 * @throws IOException
+	 * @exception ritorna un messaggio di errore se errata la queryString 
+	 */
 	protected void delete (HttpServletRequest request, HttpServletResponse response) throws
 	ServletException, IOException {
 		try {

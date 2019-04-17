@@ -2,21 +2,14 @@ package it.ats.hibernate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.model.relational.SimpleAuxiliaryDatabaseObject;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.mapping.List;
+
 /**
  * Servlet implementation class Persona
  */
@@ -41,8 +34,21 @@ public class Persona extends HttpServlet {
         	censimento(request, response);
         }
 	}   
+	
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Il metodo censimento è stato definito per effettuare 
+	 * un'operazione di inserimento su database, in questo caso
+	 * verranno inserite le generiche di un cliente
+	 * Viene definita la SessionFactory ovvero l'oggetto 
+	 * responsabile dell’apertura delle sessioni verso il database 
+	 * @param request contiene il valore di una richiesta parametrica come
+	 * una stringa, in questo caso: ndg, nome, cognome, dataNascita e codFiscale
+	 * @param response - in questo caso ritornerà un oggetto di tipo 
+	 * PrintWriter che mostrerà in output il messaggio che conferma l'avvenuto
+	 * inserimento
+	 * @throws ServletException 
+	 * @throws IOException
+	 * @exception ritorna un messaggio di errore se errata la queryString 
 	 */
 	  protected void censimento(HttpServletRequest request, HttpServletResponse response) throws
 		ServletException, IOException {
@@ -82,8 +88,21 @@ public class Persona extends HttpServlet {
 		          "</html>");
 			}
 		}
-		
-
+	  /**
+		 * Il metodo delete è stato definito per effettuare 
+		 * un'operazione di cancellazione su database, in questo caso 
+		 * verrà cancellata la registrazione di un cliente 
+		 * Viene definita la SessionFactory ovvero l'oggetto 
+		 * responsabile dell’apertura delle sessioni  verso il database 
+		 * @param request contiene il valore di una richiesta parametrica come
+		 * una stringa, in questo caso ndg 
+		 * @param response - in questo caso ritornerà un oggetto di tipo 
+	     * PrintWriter che mostrerà in output il messaggio che conferma l'avvenuta
+	     * cancellazione
+		 * @throws ServletException 
+		 * @throws IOException
+		 * @exception ritorna un messaggio di errore se errata la queryString 
+		 */
 	 protected void delete(HttpServletRequest request, HttpServletResponse response) throws
 		ServletException, IOException {
 		 try {	
@@ -117,7 +136,20 @@ public class Persona extends HttpServlet {
 			          "</html>");
 				}
 			}	 
-	 
+	   /**
+		 * Il metodo update è stato definito per effettuare 
+		 * un'operazione di modifica/aggiornamento
+		 * Viene definita la SessionFactory ovvero l'oggetto 
+		 * responsabile dell’apertura delle sessioni  verso il database 
+		 * @param request contiene il valore di una richiesta parametrica come
+		 * una stringa, in questo caso idConto e NDG e nome
+		 * @param response - in questo caso ritornerà un oggetto di tipo 
+	     * PrintWriter che mostrerà in output il messaggio che conferma l'avvenuta
+	     * modifica
+		 * @throws ServletException 
+		 * @throws IOException
+		 * @exception ritorna un messaggio di errore se errata la queryString 
+		 */
 	protected void update(HttpServletRequest request, HttpServletResponse response) throws
 			ServletException, IOException {
 		SessionFactory sessionFactory = (SessionFactory)getServletContext().getAttribute("SessionFactory");
@@ -139,6 +171,9 @@ public class Persona extends HttpServlet {
 		          "</body>" +
 		          "</html>");	
 	}
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);	
 	}	
