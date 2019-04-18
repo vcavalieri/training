@@ -52,5 +52,4 @@ public class UtentiAssociazioneConto implements java.io.Serializable {
 	public void setUtenti(Utenti utenti) {
 		this.utenti = utenti;
 	}
-
 }

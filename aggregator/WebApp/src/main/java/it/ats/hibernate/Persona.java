@@ -2,13 +2,21 @@ package it.ats.hibernate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+
 
 /**
  * Servlet implementation class Persona
@@ -32,6 +40,8 @@ public class Persona extends HttpServlet {
         	delete(request, response);
         } else if("insert".equals(operazione)) {
         	censimento(request, response);
+        }else if("search".equals(operazione)) {
+        	search(request, response);
         }
 	}   
 	
@@ -59,8 +69,9 @@ public class Persona extends HttpServlet {
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		String dataNascita = request.getParameter("dataNascita");
-		String codFiscale = request.getParameter("codFiscale");		
-		String queryString = "INSERT INTO utenti (ndg, nome, cognome, dataNascita, codFiscale) VALUES ('" + ndg + "','" + nome + "','" + cognome + "','" + dataNascita + "','" + codFiscale + "'" + ")";
+		String codFiscale = request.getParameter("codFiscale");	
+	    String nazionalita = request.getParameter("nazionalita");
+		String queryString = "INSERT INTO utenti (ndg, nome, cognome, dataNascita, codFiscale, nazionalita) VALUES ('" + ndg + "','" + nome + "','" + cognome + "','" + dataNascita + "','" + codFiscale + "','" + nazionalita + "'" + ")";
 		Query query = session.createSQLQuery(queryString);
 		query.executeUpdate();
 		PrintWriter out = response.getWriter();
@@ -122,7 +133,7 @@ public class Persona extends HttpServlet {
 		          "</ul>\n" +
 		          "</body>" +
 		          "</html>");
-		 } catch (Exception e) {
+		 } catch (Exception e) { 
 			 PrintWriter out = response.getWriter();
 			 String title="Errore";
 			    out.println(
@@ -154,10 +165,10 @@ public class Persona extends HttpServlet {
 			ServletException, IOException {
 		SessionFactory sessionFactory = (SessionFactory)getServletContext().getAttribute("SessionFactory");
 		Session session = sessionFactory.openSession();
-		String ndg = request.getParameter("ndg"); 
-		String nome = request.getParameter("nome");
+		String nazionalita = request.getParameter("nazionalita"); 
+		String ndg = request.getParameter("ndg");
 		Query query = session.createSQLQuery(
-		    "update Utenti set nome = '"+ nome + "' where ndg = " + ndg);
+		    "update Utenti set nazionalita = '"+ nazionalita + "' where ndg = " + ndg);
 	     query.executeUpdate();
 	     PrintWriter out = response.getWriter();
 		    String title="Modifica avvenuta con successo";
@@ -171,6 +182,29 @@ public class Persona extends HttpServlet {
 		          "</body>" +
 		          "</html>");	
 	}
+	protected void search(HttpServletRequest request, HttpServletResponse response) throws
+	ServletException, IOException {	
+		SessionFactory sessionFactory = (SessionFactory)getServletContext().getAttribute("SessionFactory");
+		Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(Utenti.class);
+		String ndg = request.getParameter("ndg");
+		criteria.add(Restrictions.eq("ndg", new Integer(ndg)));
+		List results = criteria.list();
+		System.out.println(results);
+		 for (Iterator iterator = results.iterator(); iterator.hasNext();){
+	            Utenti utenti = (Utenti) iterator.next(); 
+	            System.out.print("ndg: " + utenti.getNdg()); 
+	            System.out.print(" nome: " + utenti.getNome());
+	            System.out.println(" cognome: " + utenti.getCognome());
+	            System.out.println(" dataNascita: " + utenti.getDataNascita());
+	            System.out.println(" codFiscale: " + utenti.getDataNascita());
+	            System.out.println("nazionalita: " + utenti.getNazionalita());
+	            PrintWriter out = response.getWriter();
+	            String title="Il risultato della ricerca è:  ";
+			    out.println(results);
+			      
+	         }	
+	}	 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

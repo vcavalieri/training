@@ -18,9 +18,12 @@
         <property generated="never" lazy="false" name="codFiscale" optimistic-lock="true" type="string" unique="false">
             <column length="16" name="codFiscale"/>
         </property>
+         <property generated="never" lazy="false" name="nazionalita" optimistic-lock="true" type="string" unique="false">
+          <column length="5" name="nazionalita"/>
+        </property>
         <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="utentiAssociazioneContos" optimistic-lock="true" sort="unsorted" table="utenti_associazione_conto">
-            <key on-delete="noaction">
-                <column name="NDG" not-null="true"/>
+         <key on-delete="noaction">
+           <column name="NDG" not-null="true"/>
             </key>
             <one-to-many class="it.ats.hibernate.UtentiAssociazioneConto" embed-xml="true" not-found="exception"/>
         </set>

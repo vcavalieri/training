@@ -14,6 +14,7 @@ public class Utenti implements java.io.Serializable {
 	private String cognome;
 	private Date dataNascita;
 	private String codFiscale;
+	private String nazionalita;
 	private Set utentiAssociazioneContos = new HashSet(0);
    
 	/**
@@ -35,13 +36,14 @@ public class Utenti implements java.io.Serializable {
 	 * @param codFiscale
 	 * @param utentiAssociazioneContos
 	 */
-	public Utenti(int ndg, String nome, String cognome, Date dataNascita, String codFiscale,
+	public Utenti(int ndg, String nome, String cognome, Date dataNascita, String codFiscale, String nazionalita,
 			Set utentiAssociazioneContos) {
 		this.ndg = ndg;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
 		this.codFiscale = codFiscale;
+		this.nazionalita = nazionalita;
 		this.utentiAssociazioneContos = utentiAssociazioneContos;
 	}
 	/**
@@ -89,10 +91,20 @@ public class Utenti implements java.io.Serializable {
 	public void setCodFiscale(String codFiscale) {
 		this.codFiscale = codFiscale;
 	}
+	
+
+	public String getNazionalita() {
+		return nazionalita;
+	}
+
+	public void setNazionalita(String nazionalita) {
+		this.nazionalita = nazionalita;
+	}
 
 	public Set getUtentiAssociazioneContos() {
 		return this.utentiAssociazioneContos;
 	}
+	
 
 	public void setUtentiAssociazioneContos(Set utentiAssociazioneContos) {
 		this.utentiAssociazioneContos = utentiAssociazioneContos;
