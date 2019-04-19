@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -163,6 +166,7 @@ public class Persona extends HttpServlet {
 		 */
 	protected void update(HttpServletRequest request, HttpServletResponse response) throws
 			ServletException, IOException {
+		try {
 		SessionFactory sessionFactory = (SessionFactory)getServletContext().getAttribute("SessionFactory");
 		Session session = sessionFactory.openSession();
 		String nazionalita = request.getParameter("nazionalita"); 
@@ -181,30 +185,71 @@ public class Persona extends HttpServlet {
 		          "</ul>\n" +
 		          "</body>" +
 		          "</html>");	
-	}
+	    } catch (Exception e) { 
+		 PrintWriter out = response.getWriter();
+		 String title="Errore";
+		    out.println(
+		         "<html>\n" +
+		         "<head><title>" + title + "</title></head>\n" +
+		         "<body bgcolor = \"#f0f0f0\">\n" +
+		         "<h1 align = \"center\">" + title + "</h1>\n" +
+		         "<ul>\n" +
+		          "</ul>\n" +
+		          "</body>" +
+		          "</html>");
+			}
+		}	 
+	  /**
+	   * Il metodo search è stato definito per effettuare 
+	   * un'operazione di ricerca. Prendendo in considerazione 
+	   * l'ndg del cliente, ci verranno restituite le generalità dello stesso
+	   * Viene definita la SessionFactory ovvero l'oggetto 
+	   * responsabile dell’apertura delle sessioni  verso il database 
+	   * @param request contiene il valore di una richiesta parametrica come
+	   * una stringa, in questo caso l'ndg
+	   * @param response - in questo caso ritornerà un oggetto di tipo 
+	   * PrintWriter che mostrerà in output il risultato della ricerca
+	   * @throws ServletException 
+	   * @throws IOException
+	   * @exception ritorna un messaggio di errore se errata la queryString 
+   	 */
 	protected void search(HttpServletRequest request, HttpServletResponse response) throws
 	ServletException, IOException {	
 		SessionFactory sessionFactory = (SessionFactory)getServletContext().getAttribute("SessionFactory");
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Utenti.class);
 		String ndg = request.getParameter("ndg");
+		try {
 		criteria.add(Restrictions.eq("ndg", new Integer(ndg)));
 		List results = criteria.list();
-		System.out.println(results);
-		 for (Iterator iterator = results.iterator(); iterator.hasNext();){
+		 for (Iterator iterator = results.iterator();;) {
 	            Utenti utenti = (Utenti) iterator.next(); 
-	            System.out.print("ndg: " + utenti.getNdg()); 
-	            System.out.print(" nome: " + utenti.getNome());
-	            System.out.println(" cognome: " + utenti.getCognome());
-	            System.out.println(" dataNascita: " + utenti.getDataNascita());
-	            System.out.println(" codFiscale: " + utenti.getDataNascita());
-	            System.out.println("nazionalita: " + utenti.getNazionalita());
 	            PrintWriter out = response.getWriter();
-	            String title="Il risultato della ricerca è:  ";
-			    out.println(results);
-			      
-	         }	
-	}	 
+			    out.println( "<html> <head> <h2> <b>" + 
+	            "Il risultato della ricerca e:  " + "</b> </h2>" 
+	            + "<b>" + "\n" + "ndg: " + "</b>" + "<b>" + utenti.getNdg() + "</b>"   + "\n" 
+			    + "<b>" + "\n" + "nome: " + "</b>" + "<b>" + utenti.getNome() + "</b>" + "\n"
+			    + "<b>" + "\n" + "cognome: " + "</b>" + "<b>" + utenti.getCognome() + "</b>" + "\n" 
+			    + "<b>" + "\n" + "dataNascita: " + "</b>" + "<b>" + utenti.getDataNascita() + "</b>" + "\n"
+			    + "<b>" + "\n" + "codFiscale: " + "</b>" + "<b>" + utenti.getCodFiscale() + "</b>" + "\n"
+			    + "<b>" + "nazionalita: " + "</b>" + "<b>" + utenti.getNazionalita() + "</b>" + "</head> </html>");  	
+			    iterator.hasNext();
+		 }
+		} catch (Exception e) { 
+			 PrintWriter out = response.getWriter();
+			 String title="Errore";
+			    out.println(
+			         "<html>\n" +
+			         "<head><title>" + title + "</title></head>\n" +
+			         "<body bgcolor = \"#f0f0f0\">\n" +
+			         "<h1 align = \"center\">" + title + "</h1>\n" +
+			         "<ul>\n" +
+			          "</ul>\n" +
+			          "</body>" +
+			          "</html>");	
+                
+                 }
+               }
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
